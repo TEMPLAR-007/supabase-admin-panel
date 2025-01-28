@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
+import { useNavigate } from 'react-router-dom';
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -163,9 +164,23 @@ const App = () => {
     paginationButton: { padding: '10px 20px', cursor: 'pointer', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '4px', fontSize: '16px' },
   };
 
+
+
+
+
+  const navigate = useNavigate();
+
+  // Log out functionality
+  const logout = async () => {
+    await supabase.auth.signOut();
+    navigate('/'); // Redirect to login page after logout
+  };
+
   return (
     <div style={styles.container}>
       <h1 style={styles.header}>Admin Panel</h1>
+
+      <button onClick={logout} style={styles.button}>Logout</button>
 
       {/* Add Product Button */}
       <button
